@@ -56,7 +56,9 @@ of (pic spec sprite tile-relpath) for atlas rendering, or NIL."
                                          base (getf sp :row) (getf sp :col))))
                   (when blank (incf nblank))
                   (unless (and skip-blank blank)
-                    (push (list pic spec sp tile-rel) records)
+                    ;; only small uniform sheets feed the master atlas
+                    (when (sheet-spec-in-atlas spec)
+                      (push (list pic spec sp tile-rel) records))
                     (when write-tiles
                       (write-tile pic sp (merge-pathnames tile-rel out-dir))))
                   (push (obj "index" (getf sp :index)

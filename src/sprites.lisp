@@ -10,17 +10,42 @@
                            (name &key (tile-w 16) (tile-h 16)
                                       (origin-x 0) (origin-y 0)
                                       (gap-x 0) (gap-y 0)
-                                      cols rows label)))
-  name tile-w tile-h origin-x origin-y gap-x gap-y cols rows label)
+                                      cols rows label (in-atlas t))))
+  name tile-w tile-h origin-x origin-y gap-x gap-y cols rows label
+  ;; whether this sheet's tiles join the master 16x16 atlas
+  (in-atlas t))
+
+(defun %iconpg-numbered ()
+  "The eight 3x3 numbered icon pages (ICONPG1..8)."
+  (loop for i from 1 to 8
+        collect (make-sheet-spec
+                 (format nil "ICONPG~D" i)
+                 :tile-w 110 :tile-h 68 :origin-x 1 :origin-y 1
+                 :gap-x 1 :gap-y 1 :cols 3 :rows 3 :in-atlas nil
+                 :label "improvement / category icons (3x3)")))
 
 (defparameter *sprite-sheets*
-  (list
-   (make-sheet-spec "SP257"   :tile-w 16 :tile-h 16 :label "units, icons, city sizes")
-   (make-sheet-spec "SP299"   :tile-w 16 :tile-h 16 :label "sprites")
-   (make-sheet-spec "SPRITES" :tile-w 16 :tile-h 16 :label "cursors / misc sprites")
-   (make-sheet-spec "TER257"  :tile-w 16 :tile-h 16 :label "terrain tiles"))
+  (append
+   (list
+    ;; --- 16x16 game sprite sheets (included in the master atlas) ---
+    (make-sheet-spec "SP257"   :tile-w 16 :tile-h 16 :label "units, icons, city sizes")
+    (make-sheet-spec "SP299"   :tile-w 16 :tile-h 16 :label "sprites")
+    (make-sheet-spec "SPRITES" :tile-w 16 :tile-h 16 :label "cursors / misc sprites")
+    (make-sheet-spec "TER257"  :tile-w 16 :tile-h 16 :label "terrain tiles"))
+   ;; --- ICONPG civilopedia icon pages (large tiles, own grids) ---
+   (%iconpg-numbered)
+   (list
+    ;; lettered pages: 2 columns, varying row counts
+    (make-sheet-spec "ICONPGA" :tile-w 160 :tile-h 66 :cols 2 :rows 3 :in-atlas nil :label "unit illustrations (2x3)")
+    (make-sheet-spec "ICONPGB" :tile-w 160 :tile-h 50 :cols 2 :rows 4 :in-atlas nil :label "unit illustrations (2x4)")
+    (make-sheet-spec "ICONPGC" :tile-w 160 :tile-h 66 :cols 2 :rows 3 :in-atlas nil :label "unit illustrations (2x3)")
+    (make-sheet-spec "ICONPGD" :tile-w 160 :tile-h 40 :cols 2 :rows 5 :in-atlas nil :label "unit illustrations (2x5)")
+    (make-sheet-spec "ICONPGE" :tile-w 160 :tile-h 66 :cols 2 :rows 3 :in-atlas nil :label "unit illustrations (2x3)")
+    ;; terrain/map preview pages: 3 columns x 2 rows
+    (make-sheet-spec "ICONPGT1" :tile-w 106 :tile-h 87 :cols 3 :rows 2 :in-atlas nil :label "map/terrain previews (3x2)")
+    (make-sheet-spec "ICONPGT2" :tile-w 106 :tile-h 87 :cols 3 :rows 2 :in-atlas nil :label "map/terrain previews (3x2)")))
   "Known sprite sheets and their tile geometry.  Files not listed here are
-extracted as a single image only (unless :force-tile is passed to EXTRACT-ALL).")
+extracted as a single image only.")
 
 (defun find-sheet-spec (base)
   (find base *sprite-sheets* :key #'sheet-spec-name :test #'string-equal))

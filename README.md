@@ -73,11 +73,24 @@ extracted/
 `extract-all` keywords: `:write-tiles` (default `t`), `:skip-blank` (skip
 fully-transparent tiles, default `t`), `:atlas-columns` (default `32`).
 
-## Adding / adjusting sprite sheets
+## Sprite sheets that get sliced
 
-Tile geometry lives in `*sprite-sheets*` (`src/sprites.lisp`). Add a
-`make-sheet-spec` entry to slice another file, e.g.:
+Tile geometry lives in `*sprite-sheets*` (`src/sprites.lisp`):
+
+* **16×16 game sheets** — `SP257`, `SP299`, `SPRITES`, `TER257` (terrain, units,
+  city graphics). These feed the master `atlas.png`.
+* **ICONPG civilopedia pages** — `ICONPG1`–`ICONPG8` (3×3 improvement/category
+  icons), `ICONPGA`–`ICONPGE` (2-column unit illustrations), `ICONPGT1`/`T2`
+  (3×2 map previews). These are large tiles, so they're sliced and indexed but
+  kept out of the 16×16 atlas (`:in-atlas nil`).
+
+Add a `make-sheet-spec` entry to slice another file, e.g.:
 
 ```lisp
-(make-sheet-spec "ICONPG1" :tile-w 28 :tile-h 19 :label "advance icons")
+(make-sheet-spec "CITYPIX1" :tile-w 32 :tile-h 24 :cols 8 :rows 6
+                 :in-atlas nil :label "city graphics")
 ```
+
+`make-sheet-spec` keys: `:tile-w` `:tile-h` `:origin-x` `:origin-y` `:gap-x`
+`:gap-y` `:cols` `:rows` `:label` `:in-atlas`. When `:cols`/`:rows` are omitted
+they're computed from the image size and tile pitch.
