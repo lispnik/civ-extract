@@ -1,0 +1,9 @@
+# generated extraction output
+extracted/
+
+# ocicl-fetched dependency sources
+ocicl/
+
+# build artifacts
+*.fasl
+.DS_Store

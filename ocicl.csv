@@ -1,0 +1,3 @@
+com.inuoe.jzon, ghcr.io/ocicl/com.inuoe.jzon@sha256:b0cfbc3d8fb3c09526d92575b40b13a68ad93be7edeb48fd69dcea053c5611a5, jzon-20251113-f05afbb/com.inuoe.jzon.asd
+com.inuoe.jzon-tests, ghcr.io/ocicl/com.inuoe.jzon@sha256:b0cfbc3d8fb3c09526d92575b40b13a68ad93be7edeb48fd69dcea053c5611a5, jzon-20251113-f05afbb/com.inuoe.jzon-tests.asd
+zpng, ghcr.io/ocicl/zpng@sha256:0796acd47f4c7df74e4525060f77ce906a403030481baf8a46bb38621fb000da, zpng-1.2.2/zpng.asd
