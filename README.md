@@ -4,6 +4,11 @@ Extract all graphics assets from the DOS game **Sid Meier's Civilization (1991)*
 with a full sprite index. Written in Common Lisp as an ASDF system; dependencies
 are managed with [ocicl](https://github.com/ocicl/ocicl).
 
+![Master atlas of every 16×16 game sprite](docs/atlas.png)
+
+*The master `atlas.png`: all 729 terrain, unit and city sprites from `SP257`,
+`SP299`, `SPRITES` and `TER257`.*
+
 ## What it does
 
 * Decodes every `*.PIC` file (107 of them) to a PNG.
