@@ -12,7 +12,7 @@
 
 (asdf:defsystem "civ-extract"
   :description "Extract graphics assets (with sprite index) from DOS Civilization .PIC files."
-  :author "mkennedy@swiftsensors.com"
+  :author "burnsidemk@gmail.com"
   :license "CC0"
   :version "1.0.0"
   :depends-on ("zpng" "com.inuoe.jzon")
