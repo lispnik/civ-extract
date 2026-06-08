@@ -1,5 +1,7 @@
 # civ-extract
 
+![Sid Meier's Civilization logo](docs/logo.png)
+
 Extract all graphics assets from the DOS game **Sid Meier's Civilization (1991)**,
 with a full sprite index. Written in Common Lisp as an ASDF system; dependencies
 are managed with [ocicl](https://github.com/ocicl/ocicl).
