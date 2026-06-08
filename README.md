@@ -82,6 +82,11 @@ fully-transparent tiles, default `t`), `:atlas-columns` (default `32`).
 
 ## Sprite sheets that get sliced
 
+A single sliced tile (`sprites/ICONPGA/tile_000_000.png`, cut from the `ICONPGA`
+page):
+
+![Sample sliced sprite — musketeers](docs/sample-sprite.png)
+
 Tile geometry lives in `*sprite-sheets*` (`src/sprites.lisp`):
 
 * **16×16 game sheets** — `SP257`, `SP299`, `SPRITES`, `TER257` (terrain, units,
