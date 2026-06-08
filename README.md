@@ -65,20 +65,49 @@ extracted/
   sprite-index.json        # index of every asset + sprite
 ```
 
-## API
+## Usage
+
+From a REPL (or `sbcl --load`), point `:source-dir` at the directory holding the
+game's `.PIC` files:
 
 ```lisp
 (asdf:load-system :civ-extract)
 
-;; extract everything
-(civ-extract:extract-all :source-dir #p"../" :out-dir #p"extracted/")
+;; 1. Extract everything: full images, sliced tiles, atlas and JSON index.
+(civ-extract:extract-all :source-dir #p"~/Projects/CIVILIZATION/"
+                         :out-dir    #p"extracted/")
+;; => writes extracted/images/*.png, extracted/sprites/<SHEET>/*.png,
+;;    extracted/atlas.png and extracted/sprite-index.json
 
-;; decode a single file to a PIC struct
-(civ-extract:parse-pic "../SP257.PIC")   ; => #S(PIC :width 320 :height 200 ...)
+;; 2. Decode a single file into a PIC struct and inspect it.
+(let ((pic (civ-extract:parse-pic #p"~/Projects/CIVILIZATION/SP257.PIC")))
+  (format t "~A: ~Dx~D, ~D bpp~%"
+          (civ-extract:pic-source pic)
+          (civ-extract:pic-width pic)
+          (civ-extract:pic-height pic)
+          (civ-extract:pic-depth pic)))
+;; => SP257: 320x200, 8 bpp
+
+;; 3. Skip the per-tile PNGs and just build the images + atlas + index faster.
+(civ-extract:extract-all :source-dir #p"~/Projects/CIVILIZATION/"
+                         :write-tiles nil)
 ```
 
-`extract-all` keywords: `:write-tiles` (default `t`), `:skip-blank` (skip
-fully-transparent tiles, default `t`), `:atlas-columns` (default `32`).
+`extract-all` keywords:
+
+| keyword | default | meaning |
+|---------|---------|---------|
+| `:source-dir` | `#p"../"` | directory containing the `.PIC` files |
+| `:out-dir` | `#p"extracted/"` | where output is written |
+| `:write-tiles` | `t` | also write one PNG per sliced sprite |
+| `:skip-blank` | `t` | drop fully-transparent tiles |
+| `:atlas-columns` | `32` | columns in the master `atlas.png` |
+
+Or just run the bundled script, which calls `extract-all` for you:
+
+```sh
+sbcl --non-interactive --load run.lisp
+```
 
 ## Sprite sheets that get sliced
 
