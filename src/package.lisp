@@ -13,4 +13,7 @@
            #:pic-depth
            #:pic-source
            #:*default-palette-16*
-           #:*sprite-sheets*))
+           #:*sprite-sheets*
+           #:parse-fonts
+           #:font
+           #:render-font-sheet))

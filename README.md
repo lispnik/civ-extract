@@ -16,7 +16,8 @@ are managed with [ocicl](https://github.com/ocicl/ocicl).
 * Decodes every `*.PIC` file (107 of them) to a PNG.
 * Slices the known sprite sheets into individual 16×16 tiles.
 * Renders **one master `atlas.png`** containing every sprite.
-* Writes **`sprite-index.json`** describing every asset and sprite.
+* Extracts the 9 bitmap fonts from `FONTS.CV` into specimen sheets under `fonts/`.
+* Writes **`sprite-index.json`** describing every asset, sprite and font.
 
 ## The file format
 
@@ -38,6 +39,20 @@ total; `0x90 0x00` is a literal `0x90`. Colour index 0 is transparent.
 
 (Algorithm matches the CC0-licensed [CivOne](https://github.com/SWY1985/CivOne)
 reference decoder.)
+
+## The fonts
+
+`FONTS.CV` holds 9 bitmap fonts: a `u16` count, then one `u16` offset per font
+pointing at its glyph data. Each font's metadata (`first`/`last` char, bytes per
+row, top/bottom row, x/y spacing) sits in the 7 bytes just before that pointer,
+preceded by a per-char pixel-width table; glyph rows are 1bpp (MSB-first) and
+stored row-interleaved across all chars. `civ-extract` renders each font to a
+specimen sheet under `fonts/`.
+
+![Civilization bitmap font specimen](docs/fonts.png)
+
+*One of the nine fonts (`fonts/font2.png`), shown over a dark background — the
+extracted PNGs are white glyphs on transparency.*
 
 ## Running it
 

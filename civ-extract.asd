@@ -26,4 +26,5 @@
                (:file "pic")
                (:file "png")
                (:file "sprites")
+               (:file "font")
                (:file "extract")))
